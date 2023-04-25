@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Forfeit15.Preferences.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/{userId:guid}")]
 [Consumes("application/json")]
 [Produces("application/json")]
 public class PreferenceController : ControllerBase
@@ -16,7 +16,17 @@ public class PreferenceController : ControllerBase
         _preferenceService = preferenceService;
     }
 
-    [HttpPost("{userId:guid}")]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPreferences( Guid userId,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await _preferenceService.GetPreferencesAsync(userId, cancellationToken));
+    } 
+    
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -26,7 +36,7 @@ public class PreferenceController : ControllerBase
         return Ok(await _preferenceService.SetPreferencesAsync(subscribedPreferences, userId, cancellationToken));
     }    
     
-    [HttpPatch("{userId:guid}")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

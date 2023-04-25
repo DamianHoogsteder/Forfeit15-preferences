@@ -13,6 +13,12 @@ public class PreferenceService : IPreferenceService
     {
         _preferenceDbContext = preferenceDbContext;
     }
+    
+    public async Task<ICollection<string>> GetPreferencesAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await _preferenceDbContext.Preferences.Where(x => x.UserId == userId).Select(x => x.Content)
+            .ToListAsync(cancellationToken);
+    }
 
     public async Task<PostPreferencesResponse> SetPreferencesAsync(IEnumerable<string> subscribedPreferences,
         Guid userId, CancellationToken cancellationToken)
