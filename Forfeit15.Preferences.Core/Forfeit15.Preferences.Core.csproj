@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <PackageReference Include="Forfeit15.Postgres" Version="1.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
       <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
     </ItemGroup>
 
