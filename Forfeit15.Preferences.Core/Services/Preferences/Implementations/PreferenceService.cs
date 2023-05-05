@@ -1,4 +1,5 @@
-﻿using Forfeit15.Postgres.Contexts;
+﻿using System.Text.Json;
+using Forfeit15.Postgres.Contexts;
 using Forfeit15.Postgres.Models.Preferences;
 using Forfeit15.Preferences.Core.Services.Preferences.Contracts;
 using Forfeit15.Preferences.Core.Services.Preferences.ViewModels;
@@ -86,8 +87,9 @@ public class PreferenceService : IPreferenceService
             .ToListAsync(cancellationToken);
 
         var clientIds = userIds.Select(g => g.ToString()).ToArray();
-
+        var messageObject = JsonSerializer.Serialize(message);
+        
         //foreach signalR client 
-        await _updateHub.Clients.Users(clientIds).SendAsync("UpdateReceiver", message, cancellationToken);
+        await _updateHub.SendUpdate(clientIds, messageObject, cancellationToken);
     }
 }
