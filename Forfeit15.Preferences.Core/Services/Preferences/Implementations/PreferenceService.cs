@@ -75,7 +75,7 @@ public class PreferenceService : IPreferenceService
         _preferenceDbContext.Preferences.AddRange(responsePreferences);
         await _preferenceDbContext.SaveChangesAsync(cancellationToken);
 
-        response.Preferences = (responsePreferences as IEnumerable<string>)!;
+        response.Preferences = ((IEnumerable<string>)responsePreferences)!;
         response.Result = UpdatePreferencesResult.SuccesvolGeüpdate;
         return response;
     }
@@ -90,6 +90,6 @@ public class PreferenceService : IPreferenceService
         var messageObject = JsonSerializer.Serialize(message);
         
         //foreach signalR client 
-        await _updateHub.SendUpdate(clientIds, messageObject, cancellationToken);
+        await _updateHub.SendMessageAsync(clientIds, messageObject, cancellationToken);
     }
 }
