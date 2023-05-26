@@ -19,7 +19,7 @@ public class MessageConsumer : BackgroundService
     public MessageConsumer(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _connectionString = "amqp://admin:password@localhost:5672/";
+        _connectionString = "amqp://lxwoxkvq:tkjW4M8P7fOj-jM7Yu9I4-yTiKYj-yIK@cow.rmq2.cloudamqp.com/lxwoxkvq";
         _queueName = "forfeit15";
     }
 
